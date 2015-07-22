@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>我的导航</title>
+<link href="favicon.ico" rel="icon" />
+<style>
+body,ul,p { margin:0; padding:0; }
+body { background-color:#F2F2F2; background-size:cover; }
+li { list-style:none; }
+img { vertical-align:top; }
+#add { position:absolute; right:0; top:0; height:20px; line-height:20px; opacity:0; }
+#add:hover { background:red; opacity:1; cursor:pointer; }
+#put { position:absolute; right:1px; top:20px; display:none; width:152px; }
+#put input[type=text] { width:148px; }
+#main { width:1080px; margin:30px auto; }
+#search { text-align:center; position:relative; }
+#search img{ width:30px; height:30px; border-radius:5px; }
+#search input{ width:500px; height:30px; outline:none; border:none; font-size:20px; line-height:28px; margin-left:5px; background:url(imgs/s.png) no-repeat 5px center #E6E6E8; background-size:18px 18px; text-indent:27px; border-radius:8px; }
+#search ul { width:498px; position:absolute; left:311px; top:32px; border:1px solid silver; display:none; z-index:99; }
+#search li { height:30px; font-size:20px; line-height:28px; text-align:left; text-indent:26px; cursor:default; display:block; text-decoration:none; color:black; background-color:#F2F2F2; }
+#search li:hover { background-color:#F8A120; }
+#content { position:relative; }
+#content span { position:absolute; width:50px; height:28px; line-height:28px; font-size:18px; text-align:center; left:-50px; background:#22AB39; }
+.nav { text-align:center; margin-top:20px; }
+.nav:after { content:''; display:block; clear:both; }
+.nav li { float:left; width:80px; height:98px; margin:10px 20px; cursor:pointer; }
+.nav img{ width:80px; height:80px; border-radius:10px; }
+.nav p { height:18px; font:12px/18px "微软雅黑"; margin-top:5px; color:#929292; }
+</style>
+<script>
+function sRemind(a) {//jsonp添加百度搜索提示
+	var oSeUl = document.getElementById('seaUl');
+	var oInp = document.getElementById('search').getElementsByTagName('input')[0];
+	oSeUl.innerHTML = '';
+	oSeUl.style.display = 'none';
+	if (!a.g) return;
+	oSeUl.style.display = 'block';
+	var len1 = Math.min(5,a.g.length);
+	for (var i=0; i<len1; i++) {
+		var oLi = document.createElement('li');
+		oLi.innerHTML = a.g[i].q;
+		oLi.index = i;
+		oLi.onclick = function (ev) {
+			var ev = ev || window.event;
+			ev.cancelBubble = true;
+			window.open('http://www.baidu.com/s?wd=' + a.g[this.index].q);
+			oInp.value = '';
+			oSeUl.innerHTML = '';
+			oSeUl.style.display = 'none';
+		};
+		oSeUl.appendChild(oLi);
+	};
+};
+
+window.onload = function () {
+	var oMain = document.getElementById('main');	
+	var oPut = document.getElementById('put');	
+	var oAdd = document.getElementById('add');
+	var aInp = oPut.getElementsByTagName('input');	
+	var oSea = document.getElementById('search');
+	var oSeUl = document.getElementById('seaUl');
+	var aSeaLi = oSea.getElementsByTagName('li');
+	var oCon = document.getElementById('content');	
+	var oNav = oCon.getElementsByTagName('ul')[0];
+	var aLi = oNav.getElementsByTagName('li');
+	var aSp = oCon.getElementsByTagName('span');
+	var aSpic = oSea.getElementsByTagName('img');
+	var oInp = oSea.getElementsByTagName('input')[0];
+	var searchNum = 1;
+	var day = new Date().getDay();
+	
+	//作者推荐(原生出厂)导航添加
+	if (!window.localStorage.length) {
+		var oS = document.createElement('script');
+		oS.src = 'whiteLS.js';
+		document.body.appendChild(oS);
+		window.location.reload();
+	};
+	//读取本地存储
+	if (window.localStorage.length) {
+		for (var i=0,count=window.localStorage.length; i<count; i++) {
+			var json = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)));
+			if (typeof json != 'object') {//读取背景图片
+				document.body.style.backgroundImage = 'url(bgImg/'+window.localStorage.getItem('num')+'.jpg)';
+			} else {//添加导航
+				var oLi = document.createElement('li');
+				oLi.innerHTML = '<img src="' + json.src + '"><p>' + json.name + '</p>';
+				oLi.link = json.link;
+				oPut.style.display = 'none';
+				oNav.appendChild(oLi);
+			};
+		};
+	};
+	//随机生成背景
+	function randomBg() {
+		var num = Math.floor(Math.random()*7+1);
+		document.body.style.backgroundImage = 'url(bgImg/'+num+'.jpg)';
+		window.localStorage.setItem('num',num);
+	};
+	//每天只随机生成背景一次
+	if (day != window.localStorage.getItem('day')) {
+		randomBg();
+		window.localStorage.setItem('day',day);
+	};
+	//导航span定位出去
+	for (var i=0; i<aSp.length; i++) {
+		aSp[i].style.top = 10 + 118 * i + 'px';
+	};
+	//搜索图标切换
+	aSpic[1].style.display = 'none';
+	for (var i=0; i<aSpic.length; i++) {
+		aSpic[i].index = i;
+		aSpic[i].onclick = function () {
+			for (var i=0; i<aSpic.length; i++) {
+				aSpic[i].style.display = 'inline';
+			};
+			this.style.display = 'none';
+			searchNum = this.index;
+		};
+	};
+	//2搜索功能
+	oInp.onkeyup = function (ev) {
+		var ev = ev || window.event;
+		if (ev.keyCode == 13) {
+			var searchWord = this.value;
+			if (searchNum) {
+				window.open('http://www.baidu.com/s?wd=' + searchWord);
+			} else {
+				window.open('https://www.google.com/?gws_rd=ssl#newwindow=1&safe=strict&hl=zh-CN&site=webhp&source=hp&q=' + searchWord);
+			};
+			this.value = '';
+		};
+		if (searchNum) {
+			var oScript = document.createElement('script');//跨域请求
+			oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.value+'&json=1&p=3&sid=1447_16102_12824_10812_14429_12868_16166_14667_16322_16211_14958_16427_16279_16460_15311_11875_13932_14925&req=2&cb=sRemind';
+			document.body.appendChild(oScript);
+		};
+	};
+	//点击页面其他部分搜索提示消失
+	document.body.onclick = function () {
+		oSeUl.innerHTML = '';
+		oSeUl.style.display = 'none';
+	};
+	//添加导航板块出现
+	oAdd.onclick = function () {
+		oPut.style.display = 'block';
+	};
+	//add导航
+	aInp[3].onclick = function () {
+		var name = aInp[0].value;
+		var link = aInp[1].value;
+		var src = 'imgs/'+ aInp[2].value + '.png';
+		var time = new Date().getTime();
+		if (!name || !link || !aInp[2].value) {
+			alert('内容不能为空');
+			return false;
+		};
+		var oLi = document.createElement('li');
+		var json = {
+			'name':name,
+			'link':link,
+			'src':src
+		};
+		window.localStorage.setItem(time,JSON.stringify(json));
+		oLi.innerHTML = '<img src="' + src + '"><p>' + name + '</p>';
+		oLi.link = link;
+		oPut.style.display = 'none';
+		oNav.appendChild(oLi);
+		aInp[0].value = aInp[1].value = aInp[2].value = '';
+		liClick();
+	};
+	//cancle添加
+	aInp[4].onclick = function () {
+		for (var i=0; i<3; i++) {
+			aInp[i].value = '';
+		};
+		oPut.style.display = 'none';
+	};
+	//li点击跳转
+	liClick();
+	function liClick() {
+		for (var i=0; i<aLi.length; i++) {
+			aLi[i].index = i;
+			aLi[i].onclick = function () {
+				window.open(this.link);
+			};
+			aLi[i].oncontextmenu = function () {//右键删除导航
+				if (confirm('删除导航？')) {
+					oNav.removeChild(this);
+					window.localStorage.removeItem(window.localStorage.key(this.index));//因为localStorage中导航的key值为时间戳，即为数字，而日期，背景的key值为字母所以不会影响他们的先后顺序与localStorage中的一一对应关系
+				};
+				return false;
+			};
+		};
+	};
+};
+</script>
+</head>
+<body>
+	<span id="add">添加</span>
+	<div id="put">
+		<input type="text" placeholder="名称">
+		<input type="text" placeholder="网址">
+		<input type="text" placeholder="图片名">
+		<input type="button" value="add">
+		<input type="button" value="cancle">
+	</div>
+	<div id="main">
+		<div id="search">
+			<img src="imgs/s1.png" interface="baidu" title="切换">
+			<img src="imgs/s2.png" interface="google" title="切换">
+			<input type="text" placeholder="搜索或输入网站名称">
+			<ul id="seaUl"></ul>
+		</div>
+		<div id="content">
+			<ul class="nav"></ul>
+		</div>
+	</div>
+</body>
+</html>
