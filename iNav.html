@@ -55,7 +55,7 @@ function sRemind(a) {//jsonp添加百度搜索提示
 
 window.onload = function () {
 	var oMain = document.getElementById('main');	
-	var oPut = document.getElementById('put');	
+	var oPut = document.getElementById('put');
 	var oAdd = document.getElementById('add');
 	var aInp = oPut.getElementsByTagName('input');	
 	var oSea = document.getElementById('search');
@@ -70,8 +70,8 @@ window.onload = function () {
 	var searchNum = 1;
 	var day = new Date().getDay();
 	
-	//本人推荐(原生出厂)导航添加
-	if (!window.localStorage.length) {
+	//个人推荐(原生出厂)导航添加
+	if (!window.localStorage.length || window.localStorage.length == 2) {
 		var oS = document.createElement('script');
 		oS.src = 'whiteLS.js';
 		document.body.appendChild(oS);
@@ -145,53 +145,68 @@ window.onload = function () {
 	//添加导航板块出现
 	oAdd.onclick = function () {
 		oPut.style.display = 'block';
-	};
-	//add导航
-	aInp[3].onclick = function () {
-		var name = aInp[0].value;
-		var link = aInp[1].value;
-		var src = 'imgs/'+ aInp[2].value + '.png';
-		var time = new Date().getTime();
-		if (!name || !link || !aInp[2].value) {
-			alert('内容不能为空');
-			return false;
+		oPut.innerHTML = '<input type="text" placeholder="名称"><input type="text" placeholder="网址"><input type="text" placeholder="图片名"><input type="button" value="add"><input type="button" value="cancle">';
+		//add导航
+		aInp[3].onclick = function () {console.log(this)
+			var name = aInp[0].value;
+			var link = aInp[1].value;
+			var src = 'imgs/'+ aInp[2].value + '.png';
+			var time = new Date().getTime();
+			if (!name || !link || !aInp[2].value) {
+				alert('内容不能为空');
+				return false;
+			};
+			var oLi = document.createElement('li');
+			var json = {
+				'name':name,
+				'link':link,
+				'src':src
+			};
+			window.localStorage.setItem(time,JSON.stringify(json));
+			oLi.innerHTML = '<img src="' + src + '"><p>' + name + '</p>';
+			oLi.link = link;
+			oPut.style.display = 'none';
+			oNav.appendChild(oLi);
+			aInp[0].value = aInp[1].value = aInp[2].value = '';
 		};
-		var oLi = document.createElement('li');
-		var json = {
-			'name':name,
-			'link':link,
-			'src':src
+		//cancle添加
+		aInp[4].onclick = function () {
+			for (var i=0; i<3; i++) {
+				aInp[i].value = '';
+			};
+			oPut.style.display = 'none';
 		};
-		window.localStorage.setItem(time,JSON.stringify(json));
-		oLi.innerHTML = '<img src="' + src + '"><p>' + name + '</p>';
-		oLi.link = link;
-		oPut.style.display = 'none';
-		oNav.appendChild(oLi);
-		aInp[0].value = aInp[1].value = aInp[2].value = '';
-		liClick();
 	};
-	//cancle添加
-	aInp[4].onclick = function () {
-		for (var i=0; i<3; i++) {
-			aInp[i].value = '';
-		};
-		oPut.style.display = 'none';
-	};
-	//li点击跳转
+	//li点击跳转和右键删除，事件委托给父级
 	liClick();
 	function liClick() {
 		for (var i=0; i<aLi.length; i++) {
 			aLi[i].index = i;
-			aLi[i].onclick = function () {
-				window.open(this.link);
+		};
+		oNav.onclick = function (ev) {
+			var ev = ev || window.event;
+			var target = ev.srcElement || ev.target;
+			if (target.nodeName.toLowerCase() == 'li') {
+				window.open(target.link);
+			} else if (target.nodeName.toLowerCase() == 'img' || target.nodeName.toLowerCase() == 'p') {
+				window.open(target.parentNode.link);
 			};
-			aLi[i].oncontextmenu = function () {//右键删除导航
-				if (confirm('删除导航？')) {
-					oNav.removeChild(this);
-					window.localStorage.removeItem(window.localStorage.key(this.index));//因为localStorage中导航的key值为时间戳，即为数字，而日期，背景的key值为字母所以不会影响他们的先后顺序与localStorage中的一一对应关系
-				};
-				return false;
+		};
+		oNav.oncontextmenu = function (ev) {
+			var ev = ev || window.event;
+			var target = ev.srcElement || ev.target;
+			var srcLi;
+			if (target.nodeName.toLowerCase() == 'li') {
+				srcLi = target;
+			} else if (target.nodeName.toLowerCase() == 'img' || target.nodeName.toLowerCase() == 'p') {
+				srcLi = target.parentNode;
 			};
+			if (!srcLi) return;
+			if (confirm('删除导航？')) {
+				oNav.removeChild(srcLi);
+				window.localStorage.removeItem(window.localStorage.key(srcLi.index));//因为localStorage中导航的key值为时间戳，即为数字，而日期，背景的key值为字母所以不会影响他们的先后顺序与localStorage中的一一对应关系
+			};
+			return false;
 		};
 	};
 };
@@ -200,11 +215,11 @@ window.onload = function () {
 <body>
 	<span id="add">添加</span>
 	<div id="put">
-		<input type="text" placeholder="名称">
+		<!-- <input type="text" placeholder="名称">
 		<input type="text" placeholder="网址">
 		<input type="text" placeholder="图片名">
 		<input type="button" value="add">
-		<input type="button" value="cancle">
+		<input type="button" value="cancle"> -->
 	</div>
 	<div id="main">
 		<div id="search">
