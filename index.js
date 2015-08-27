@@ -285,7 +285,11 @@ window.onload = function () {
 		function sortLi() {
 			This.onoff = true
 			readLs(This)
-			oNav.insertBefore(oNav.children[This.obj.index],oNav.children[This.tmp+1])
+			if (This.obj.index > This.tmp) {
+				oNav.insertBefore(oNav.children[This.obj.index],oNav.children[This.tmp])
+			} else {
+				oNav.insertBefore(oNav.children[This.obj.index],oNav.children[This.tmp+1])
+			}
 			setTimeout(function(){
 				for (var i = 0; i < aLi.length; i++) {//重新添加索引
 					aLi[i].index = i;
