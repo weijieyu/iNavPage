@@ -273,7 +273,7 @@ window.onload = function () {
 		}
 		function collLi(This) {//检测那个li离拖拽元素最近，返回值为对应的索引
 			for (var i=0; i<aLi.length; i++) {
-				if (This == aLi[i]) {
+				if (This.obj == aLi[i]) {
 					continue
 				}
 				var dis = Math.sqrt(Math.pow(This.offsetLeft - aLi[i].offsetLeft,2) + Math.pow(This.offsetTop - aLi[i].offsetTop,2))
