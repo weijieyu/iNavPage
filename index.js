@@ -40,19 +40,21 @@ window.onload = function () {
 	var day = new Date().getDay();
 	
 	//个人推荐(原生出厂)导航添加
-	if (!window.localStorage.length || window.localStorage.length == 2) {
+	if (!window.localStorage.length || window.localStorage.length < 12) {
 		var oS = document.createElement('script');
 		oS.src = 'whiteLS.js';
 		document.body.appendChild(oS);
-		window.location.reload();
+		setTimeout(function(){
+			window.location.reload();
+		},300)
 	};
 	//读取本地存储
 	if (window.localStorage.length) {
 		for (var i=0,count=window.localStorage.length; i<count; i++) {
-			var json = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)));
-			if (typeof json != 'object') {//读取背景图片
+			if (!window.localStorage.getItem(10+i+'')) {//读取背景图片
 				document.body.style.backgroundImage = 'url(bgImg/'+window.localStorage.getItem('num')+'.jpg)';
 			} else {//添加导航
+				var json = JSON.parse(window.localStorage.getItem(10+i+''));
 				var oLi = document.createElement('li');
 				oLi.innerHTML = '<img src="' + json.src + '"><p>' + json.name + '</p>';
 				oLi.link = json.link;
@@ -243,6 +245,7 @@ window.onload = function () {
 			This.obj.style.zIndex = '1'//让他在拖拽时能够显示在上面
 			This.down(ev)
 			ev.cancelBubble = true
+			ev.preventDefault()
 		}
 	}
 	Drag.prototype.down = function (ev) {
@@ -257,7 +260,6 @@ window.onload = function () {
 		document.onmouseup = function (ev) {
 			var ev = ev || window.event
 			This.up(ev)
-			setTimeout(liClick,50)//恢复点击事件
 		}
 	}
 	Drag.prototype.move = function (ev) {
@@ -273,7 +275,7 @@ window.onload = function () {
 		}
 		function collLi(This) {//检测那个li离拖拽元素最近，返回值为对应的索引
 			for (var i=0; i<aLi.length; i++) {
-				if (This.obj == aLi[i]) {
+				if (This == aLi[i]) {
 					continue
 				}
 				var dis = Math.sqrt(Math.pow(This.offsetLeft - aLi[i].offsetLeft,2) + Math.pow(This.offsetTop - aLi[i].offsetTop,2))
@@ -295,7 +297,7 @@ window.onload = function () {
 					aLi[i].index = i;
 				};
 				for (var i=0; i<aLi.length; i++) {//改变后重新安排位置
-					if (This == aLi[i]) {
+					if (This.obj == aLi[i]) {
 						continue
 					}
 					aLi[i].style.left = pos[i].l + 'px'
@@ -307,7 +309,7 @@ window.onload = function () {
 		}
 		function readLs(This) {
 			for (var i=0,count=This.obj.parentNode.children.length; i<count; i++) {
-				var json = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)));
+				var json = JSON.parse(window.localStorage.getItem(i+10+''));
 				if (typeof json == 'object') {
 					This.obj.parentNode.children[i].src = json.src
 					This.obj.parentNode.children[i].name = json.name
@@ -321,6 +323,7 @@ window.onload = function () {
 		this.obj.onmousedown = document.onmousemove = document.onmouseup = null
 		this.obj.style.left = pos[this.obj.index].l + 'px'
 		this.obj.style.top = pos[this.obj.index].t + 'px'
+		setTimeout(liClick,50)//恢复点击事件
 		addDrag()//给拖拽完的加上下次的拖拽
 	}
 	Drag.prototype.storeCg = function (This) {

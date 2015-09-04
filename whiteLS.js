@@ -7,7 +7,7 @@
 
 //<script src="whiteLS.js"></script> 使用链接
 
-if (!window.localStorage.length || window.localStorage.length == 2) {//避免重复添加
+//if (!window.localStorage.length || window.localStorage.length == 2) {//避免重复添加
 
 	var name1 = ['微博','虎扑','知乎','新浪','果壳','腾讯','天猫','Quora','好123','维基百科','QQ邮箱','淘宝','京东','亚马逊','印象笔记','有道云','前端网','拉勾','博客园','GitHub','segmentfault','FireFox','Html5','YouTube','V2EX','百度云','stackoverflow','慕课网','CSDN','推酷','开源中国','伯乐在线'];
 
@@ -31,10 +31,7 @@ if (!window.localStorage.length || window.localStorage.length == 2) {//避免重
 		};
 		window.localStorage.setItem(time,JSON.stringify(json));//
 	};
-
 	//调试用
 	/*for (var i=0; i<window.localStorage.length; i++) {
 		console.log(window.localStorage.getItem(window.localStorage.key(i)));
 	};*/
-	
-};
