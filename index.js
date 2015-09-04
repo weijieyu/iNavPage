@@ -323,6 +323,7 @@ window.onload = function () {
 		this.obj.onmousedown = document.onmousemove = document.onmouseup = null
 		this.obj.style.left = pos[this.obj.index].l + 'px'
 		this.obj.style.top = pos[this.obj.index].t + 'px'
+		this.obj.style.zIndex = ''//还原
 		setTimeout(liClick,50)//恢复点击事件
 		addDrag()//给拖拽完的加上下次的拖拽
 	}
