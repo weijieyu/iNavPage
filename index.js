@@ -36,7 +36,7 @@ window.onload = function () {
 	var aSp = oCon.getElementsByTagName('span');
 	var aSpic = oSea.getElementsByTagName('img');
 	var oInp = oSea.getElementsByTagName('input')[0];
-	var searchNum = 0;
+	var searchNum = 1;
 	var day = new Date().getDay();
 	
 	//个人推荐(原生出厂)导航添加
@@ -79,7 +79,7 @@ window.onload = function () {
 		aSp[i].style.top = 10 + 118 * i + 'px';
 	};
 	//搜索图标切换
-	aSpic[0].style.display = 'none';
+	aSpic[1].style.display = 'none';
 	for (var i=0; i<aSpic.length; i++) {
 		aSpic[i].index = i;
 		aSpic[i].onclick = function () {
@@ -121,7 +121,7 @@ window.onload = function () {
 			oPut.style.opacity = 1
 		},50)
 		oMain.style.transform = 'translateX(-100px)';
-		oPut.innerHTML = '<input type="text" placeholder="名称"><input type="text" placeholder="网址"><input type="text" placeholder="图片名"><input type="button" value="添加"><input type="button" value="取消">';
+		oPut.innerHTML = '<input type="text" placeholder="名称"><input type="text" placeholder="网址"><input type="text" placeholder="图片名n1"><input type="button" value="添加"><input type="button" value="取消">';
 		//add导航
 		aInp[3].onclick = function () {
 			var name = aInp[0].value;
@@ -252,18 +252,18 @@ window.onload = function () {
 		var This = this
 		this.l = ev.clientX - this.obj.offsetLeft
 		this.t = ev.clientY - this.obj.offsetTop
-		document.onmousemove = function (ev) {
+		document.onmousemove = function(ev) {
 			var ev = ev || window.event
 			This.move(ev)
-			This.obj.parentNode.onclick = null//暂时禁止点击事件
 		}
-		document.onmouseup = function (ev) {
+		document.onmouseup = function(ev) {
 			var ev = ev || window.event
 			This.up(ev)
 		}
 	}
 	Drag.prototype.move = function (ev) {
 		var This = this
+		This.obj.parentNode.onclick = null//暂时禁止点击事件
 		ev.preventDefault()
 		this.obj.style.left = ev.clientX - this.l + 'px'
 		this.obj.style.top = ev.clientY - this.t + 'px'
@@ -310,7 +310,7 @@ window.onload = function () {
 		function readLs(This) {
 			for (var i=0,count=This.obj.parentNode.children.length; i<count; i++) {
 				var json = JSON.parse(window.localStorage.getItem(i+10+''));
-				if (typeof json == 'object') {
+				if (typeof json == 'object' && json) {console.log(i+10)
 					This.obj.parentNode.children[i].src = json.src
 					This.obj.parentNode.children[i].name = json.name
 					This.obj.parentNode.children[i].link = json.link
