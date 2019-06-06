@@ -1,23 +1,16 @@
 /* css */
 html { width: 100%; height: 100%; }
 body,ul,p { margin:0; padding:0; }
-body { background-color:#F2F2F2; background-size:cover; background-repeat: no-repeat; width: 100%; height: 100%; overflow: hidden; }
+body { background-color:#F2F2F2; background-size:cover; background-repeat: no-repeat; width: 100%; height: 100%; overflow: hidden; background-image: url(bgImg/bing.jpg); }
 li { list-style:none; }
 img { vertical-align:top; }
 
-#add { position:absolute; right:20px; top:20px; height:40px; width: 40px; line-height: 40px; font-size: 50px; text-align: center; border-radius: 20px; color: white; opacity: 0.8; background-color: #E74C3C; cursor:pointer; transition: .7s; font-family: '宋体'; }
-#add:hover { background-color: #FE5342; }
-#put { position:absolute; right:1px; top:70px; display:none; width:200px; transition: .7s; opacity: 0; }
-#put input[type=text] { width:190px; border: 1px solid #2ECC71; border-radius: 10px; height: 20px; font-size: 15px; line-height: 20px; display: block; outline: none; text-indent: 10px; margin-bottom: 8px; }
-#put input[type="button"] { width: 55px; height: 25px; line-height: 25px; font-size: 15px; background-color: white; border: none; border-radius: 10px; margin-right: 9px; box-sizing: content-box; outline: none; font-family: "微软雅黑"; }
-#put input:nth-of-type(4) { margin-right: 56px; }
-#put input[type="button"]:hover { background-color: #2ECC71; }
-#main { width:1080px; margin:30px auto; -ms-transition: .7s; transition: .7s; }
+#main { width:1080px; margin:0px auto; -ms-transition: .7s; transition: .7s; }
 
-#search { text-align:center; position:relative; margin: 40px 0 20px; }
+#search { text-align:center; position:relative; margin: 0 0 40px; padding-top: 40px; }
 #search img{ width:30px; height:30px; border-radius:5px; }
 #search input{ width:500px; height:30px; outline:none; border:none; font-size:20px; line-height:28px; margin-left:5px; background:url(imgs/s.png) no-repeat 5px center #FFFFFF; background-size:18px 18px; text-indent:27px; border-radius:8px; }
-#search ul { width:500px; position:absolute; left:311px; top:36px;  display:none; z-index:99; background-color: rgba(242,242,242,0.96); border-radius: 8px; }
+#search ul { width:500px; position:absolute; left:311px; top:72px;  display:none; z-index:99; background-color: rgba(242,242,242,0.96); border-radius: 8px; }
 #search li { height:30px; font-size:20px; line-height:28px; text-align:left; text-indent:26px; cursor:default; display:block; text-decoration:none; color:#2ECC71; }
 #search li:hover { background-color:#2ECC71; color: white; }
 
@@ -29,3 +22,4 @@ img { vertical-align:top; }
 .nav img{ width:80px; height:80px; border-radius:10px; }
 .nav img:hover { box-shadow: 0 0 15px #1ABC9C; }
 .nav p { height:18px; font:12px/18px "微软雅黑"; margin-top:5px; color:#929292; }
+

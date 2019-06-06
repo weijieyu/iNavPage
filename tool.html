@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Tool</title>
+<link href="tool.ico" rel="icon" />
+<style>
+#cont { padding: 20px 0 0 10px; }
+.t { font-size: 28px; }
+</style>
+<script>
+Date.prototype.pattern=function(fmt) {         
+    var o = {         
+    "M+" : this.getMonth()+1, //月份         
+    "d+" : this.getDate(), //日         
+    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+    "H+" : this.getHours(), //小时         
+    "m+" : this.getMinutes(), //分         
+    "s+" : this.getSeconds(), //秒         
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度         
+    "S" : this.getMilliseconds() //毫秒         
+    };         
+    var week = {         
+    "0" : "/u65e5",         
+    "1" : "/u4e00",         
+    "2" : "/u4e8c",         
+    "3" : "/u4e09",         
+    "4" : "/u56db",         
+    "5" : "/u4e94",         
+    "6" : "/u516d"        
+    };         
+    if(/(y+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));         
+    }         
+    if(/(E+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);         
+    }         
+    for(var k in o){         
+        if(new RegExp("("+ k +")").test(fmt)){         
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));         
+        }         
+    }         
+    return fmt;         
+}
+</script>
+<script src="jquery.js"></script>
+<script>
+$(function(){
+	var t_format = "yyyy-MM-dd HH:mm";
+	
+	// init the cont value
+	var now_t = Math.round(new Date / 1000);
+	var now_date = (new Date()).pattern(t_format);
+
+	$('#timestramp').val(now_t);
+	$('#date').val(now_date);
+
+	$('#timestramp').keyup(function(ev){
+		if (ev.which != 13) {
+			return;
+		}
+
+		setDt();
+	})
+
+	function setDt()
+	{
+		var the_t = $('#timestramp').val();
+
+		var the_date = (new Date(the_t*1000)).pattern(t_format);
+		var the_date2 = (new Date((the_t - 8*3600)*1000)).pattern(t_format);
+		var the_date3 = (new Date((the_t - 14*3600)*1000)).pattern(t_format);
+
+		$('#date').val(the_date);
+		$('#b_date').val(the_date2);
+		$('#z_date').val(the_date3);
+	}
+
+	// init
+	setDt();
+
+});
+</script>
+</head>
+<body>
+
+<div id='cont'>
+	时间戳：<input class='t' id='timestramp' type="text" value='dd'>
+	<p></p>
+	北京时间：<input class='t' id='date' type="text" value='dddd'>
+	<p></p>
+	标准时间：<input class='t' id='b_date' type="text" value='dddd'>
+	<p></p>
+	芝加哥时间：<input class='t' id='z_date' type="text" value='dddd'>
+</div>
+
+</body>
+</html>
