@@ -2,7 +2,7 @@ var link = [
     {
         name:'Tool',
         pic:'tool',
-        url:'http://inav.com/tool.html',
+        url:'http://www.inav.com/tool.html',
         sort_n:10
     },
 	{
@@ -27,13 +27,13 @@ var link = [
         name:'pptv体育',
         pic:'pptv',
         url:'http://sports.pptv.com/',
-        sort_n:132
+        sort_n:140
     },
     {
         name:'网易云音乐',
         pic:'38',
         url:'http://music.163.com/#',
-        sort_n:140
+        sort_n:132
     },
     {
         name:'腾讯',
@@ -84,9 +84,9 @@ var link = [
         sort_n:210
     },
     {
-        name:'京东金融',
+        name:'腾讯财经',
         pic:'14',
-        url:'http://gupiao.jd.com/optional-stock/',
+        url:'https://new.qq.com/ch/finance/',
         sort_n:125
     },
     /*{
@@ -197,12 +197,12 @@ var link = [
         url:'https://twitter.com/',
         sort_n:352
     },
-    {
+    /*{
         name:'雪球',
         pic:'xq',
         url:'https://xueqiu.com/today/',
         sort_n:271
-    },
+    },*/
     /*{
         name:'集思录',
         pic:'27',
