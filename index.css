@@ -7,10 +7,10 @@ img { vertical-align:top; }
 
 #main { width:1080px; margin:0px auto; -ms-transition: .7s; transition: .7s; }
 
-#search { text-align:center; position:relative; margin: 0 0 40px; padding-top: 40px; }
+#search { text-align:center; position:relative; margin: 0 0 40px; padding-top: 80px; }
 #search img{ width:30px; height:30px; border-radius:5px; }
 #search input{ width:500px; height:30px; outline:none; border:none; font-size:20px; line-height:28px; margin-left:5px; background:url(imgs/s.png) no-repeat 5px center #FFFFFF; background-size:18px 18px; text-indent:27px; border-radius:8px; }
-#search ul { width:500px; position:absolute; left:311px; top:72px;  display:none; z-index:99; background-color: rgba(242,242,242,0.96); border-radius: 8px; }
+#search ul { width:500px; position:absolute; left:311px; 1top:72px;  display:none; z-index:99; background-color: rgba(242,242,242,0.96); border-radius: 8px; }
 #search li { height:30px; font-size:20px; line-height:28px; text-align:left; text-indent:26px; cursor:default; display:block; text-decoration:none; color:#2ECC71; }
 #search li:hover { background-color:#2ECC71; color: white; }
 

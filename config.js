@@ -80,7 +80,7 @@ var link = [
     {
         name:'京东',
         pic:'13',
-        url:'http://www.jd.com/',
+        url:'http://jd.com/',
         sort_n:210
     },
     {
