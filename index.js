@@ -26,22 +26,22 @@ function sRemind(a) {//jsonp添加百度搜索提示
 	};
 
 
-	$('#seaUl li').hover(function(){
+	/*$('#seaUl li').hover(function(){
 		searchMoveIn($(this));
 	}, function(){
 		searchMoveOut($(this));
-	})
+	})*/
 
 	liHoverIndex = -1;
 };
 
-// 搜索项的鼠标移入
+// 搜索项的焦点进入
 function searchMoveIn($li) {
 	$li.addClass('li_hover');
 	$('#searchInput').val($li.html());
 }
 
-// 搜索项的鼠标移出
+// 搜索项的焦点移出
 function searchMoveOut($li) {
 	$li.removeClass('li_hover');
 	$('#searchInput').val($li.html());
