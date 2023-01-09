@@ -71,10 +71,12 @@ $(function(){
 		var the_date = (new Date(the_t*1000)).pattern(t_format);
 		var the_date2 = (new Date((the_t - 8*3600)*1000)).pattern(t_format);
 		var the_date3 = (new Date((the_t - 14*3600)*1000)).pattern(t_format);
+        var the_date4 = (new Date((the_t - 16*3600)*1000)).pattern(t_format);
 
 		$('#date').val(the_date);
 		$('#b_date').val(the_date2);
 		$('#z_date').val(the_date3);
+        $('#l_date').val(the_date4);
 	}
 
 	// init
@@ -93,6 +95,8 @@ $(function(){
 	标准时间：<input class='t' id='b_date' type="text" value='dddd'>
 	<p></p>
 	芝加哥时间：<input class='t' id='z_date' type="text" value='dddd'>
+    <p></p>
+    洛杉矶时间：<input class='t' id='l_date' type="text" value='dddd'>
 </div>
 
 </body>
