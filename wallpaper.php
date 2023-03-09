@@ -15,4 +15,4 @@ $filename = "/Users/alpha/server/iNav/bgImg/bing.jpg";
 $tp = fopen($filename, 'w');
 fwrite($tp, $imageData);
 fclose($tp);
-?>
+
