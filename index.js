@@ -101,6 +101,9 @@ window.onload = function () {
 		}
 	}
 
+	// 上来就把焦点聚集到搜索框
+	oInp.focus();
+
 	//对数组排序
 	function sortArr (thisA){
 	    var len = thisA.length,
