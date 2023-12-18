@@ -49,6 +49,8 @@ function searchMoveOut($li) {
 
 var liHoverIndex = -1;
 
+var composing = false;//here
+
 document.onkeyup = function (e) {
 	if (e.keyCode != 38 && e.keyCode != 40) {console.log('非上下键返回');
 		return;
